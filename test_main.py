@@ -34,6 +34,14 @@ def test_get_balance_invalid_wallet_id():
     assert response.status_code == 404
     assert response.json()["detail"] == "Wallet not found"
 
+def test_perform_operation_invalid_wallet_id():
+    response = client.post(
+        "/api/v1/wallets/999/operation",
+        json={"operation_type": operation_type, "amount": amount},
+    )
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Wallet not found"
+
 def test_perform_operation_deposit():
     setup()
     response = client.post(
@@ -72,4 +80,31 @@ def test_perform_operation_insufficient_funds():
     )
     assert response.status_code == 400
     assert response.json()["detail"] == "Insufficient funds"
+    teardown()
+
+def test_perform_operation_concurrent_updates():
+    setup()
+    # Simulate concurrent updates by sending two requests in parallel
+    import threading
+
+    def perform_operation():
+        response = client.post(
+            f"/api/v1/wallets/{wallet_id}/operation",
+            json={"operation_type": operation_type, "amount": amount},
+        )
+        assert response.status_code == 200
+
+    threads = []
+    for _ in range(2):
+        thread = threading.Thread(target=perform_operation)
+        thread.start()
+        threads.append(thread)
+
+    for thread in threads:
+        thread.join()
+
+    # Check the final balance
+    response = client.get(f"/api/v1/wallets/{wallet_id}")
+    assert response.status_code == 200
+    assert response.json()["balance"] == balance + 2 * amount
     teardown()
