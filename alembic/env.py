@@ -1,43 +1,22 @@
-import os
-
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from sqlalchemy import MetaData, create_engine
-from sqlalchemy.sql import text
 
 from alembic import context
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+DB_URL = os.getenv('DB_URL')
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
-# thanks stackoverflow:
-# https://stackoverflow.com/questions/67526879/alembic-alembic-configuration-not-found-in-env-file
 config = context.config
 
-
-# here we allow ourselves to pass interpolation vars to alembic.ini
-# from the host env
-section = config.config_ini_section
-config.set_section_option(section, "DB_USER", os.environ.get("DB_USER"))
-config.set_section_option(section, "DB_PASS", os.environ.get("DB_PASS"))
-
-metadata = MetaData()
-
-with open('db.sql', 'r') as f:
-    sql_code = f.read()
-
-for statement in sql_code.split(';'):
-    if statement.strip():
-        try:
-            query = text(statement)
-            engine = create_engine(config.get_main_option("sqlalchemy.url"))
-            query.compile(bind=engine)
-            metadata.reflect(bind=engine)
-        except Exception as e:
-            print(f"Ошибка при парсинге SQL-кода: {e}")
-
-print(metadata.tables) # Для теста, закомментить позже
+config.set_main_option('sqlalchemy.url', DB_URL)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -48,7 +27,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = metadata
+target_metadata = None
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
