@@ -21,13 +21,11 @@ class OperationRequest(BaseModel):
 
 @app.post("/api/v1/wallets/{wallet_id}/operation")
 async def perform_operation(wallet_id: str, operation: OperationRequest):
-    # Get the wallet from the database
     session = Session()
     wallet = session.query(Wallet).get(wallet_id)
     if not wallet:
         raise HTTPException(status_code=404, detail="Wallet not found")
 
-    # Perform the operation
     if operation.operation_type == "DEPOSIT":
         wallet.balance += operation.amount
     elif operation.operation_type == "WITHDRAW":
