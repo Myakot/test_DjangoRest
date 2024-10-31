@@ -1,3 +1,5 @@
+import pytest
+
 from fastapi.testclient import TestClient
 from main import app, Session
 from models import Wallet
@@ -84,7 +86,6 @@ def test_perform_operation_insufficient_funds():
 
 def test_perform_operation_concurrent_updates():
     setup()
-    # Simulate concurrent updates by sending two requests in parallel
     import threading
 
     def perform_operation():
@@ -103,8 +104,21 @@ def test_perform_operation_concurrent_updates():
     for thread in threads:
         thread.join()
 
-    # Check the final balance
     response = client.get(f"/api/v1/wallets/{wallet_id}")
     assert response.status_code == 200
     assert response.json()["balance"] == balance + 2 * amount
     teardown()
+
+#
+# @pytest.mark.benchmark
+# def test_perform_operation_1000_rps(benchmark):
+#     setup()
+#     def perform_operation():
+#         response = client.post(
+#             f"/api/v1/wallets/{wallet_id}/operation",
+#             json={"operation_type": operation_type, "amount": amount},
+#         )
+#         assert response.status_code == 200
+#
+#     benchmark.pedantic(perform_operation, rounds=1000, iterations=1)
+#     teardown()
