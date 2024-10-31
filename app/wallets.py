@@ -1,30 +1,15 @@
-import os
 import threading
 
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from typing import Dict
+from fastapi import HTTPException
 
-from models import Wallet
-from dotenv import load_dotenv
+from .database import Session
+from .models import Wallet
+from .schemas import OperationRequest
 
-load_dotenv()
+locks: Dict[str, threading.Lock] = {}
 
-DB_URL = os.getenv('DB_URL')
-app = FastAPI()
-
-engine = create_engine(DB_URL)
-Session = sessionmaker(bind=engine)
-
-class OperationRequest(BaseModel):
-    operation_type: str
-    amount: int
-
-locks = {}
-
-@app.post("/api/v1/wallets/{WALLET_UUID}/operation")
-async def perform_operation(WALLET_UUID: str, operation: OperationRequest):
+def perform_operation(WALLET_UUID: str, operation: OperationRequest):
     if WALLET_UUID not in locks:
         locks[WALLET_UUID] = threading.Lock()
     with locks[WALLET_UUID]:
@@ -57,8 +42,7 @@ async def perform_operation(WALLET_UUID: str, operation: OperationRequest):
         finally:
             session.close()
 
-@app.get("/api/v1/wallets/{WALLET_UUID}")
-async def get_balance(WALLET_UUID: str):
+def get_balance(WALLET_UUID: str):
     session = Session()
     wallet = session.query(Wallet).get(WALLET_UUID)
     if not wallet:

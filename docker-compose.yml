@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      DB_URL: ${DB_URL}
+    volumes:
+      - ./docker_config.py:/app/docker_config.py
+
+  app:
+    build: .
+    environment:
+      DB_URL: ${DB_URL}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  db-data:

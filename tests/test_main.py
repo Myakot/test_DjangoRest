@@ -1,8 +1,9 @@
 import pytest
 
 from fastapi.testclient import TestClient
-from main import app, Session
-from models import Wallet
+from app.main import app
+from app.database import Session
+from app.models import Wallet
 
 client = TestClient(app)
 
