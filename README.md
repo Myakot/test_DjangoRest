@@ -22,14 +22,35 @@ Postgresql
 Решенное задание залить на гитхаб, предоставить ссылку
 Все возникающие вопросы по заданию решать самостоятельно, по своему усмотрению.
 
+# Benchmark Results
+### Summary
+
+| Name | Min (ms) | Max (ms) | Mean (ms) | StdDev (ms) | Median (ms) | IQR (ms) | Outliers | OPS | Rounds | Iterations |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| test_perform_operation_1000_rps | 723.43 | 2509.04 | 960.15 | 162.92 | 935.80 | 231.46 | 322;9 | 1.04 | 1000 | 1 |
+
+### Legend
+
+* Outliers: 1 Standard Deviation from Mean; 1.5 IQR (InterQuartile Range) from 1st Quartile and 3rd Quartile.
+* OPS: Operations Per Second, computed as 1 / Mean
+
+### Test Summary
+
+* **Passed:** 1
+* **Skipped:** 8
+* **Warnings:** 1
+* **Total Time:** 965.53s (0:16:05)
+
 # TODO
 - [x] кейс, где число отрицательное
 - [x] кейс, где айди кошелька не строка
 - [x] проверка на наличие кошелька перед использованием session.merge
 - [x] нет проверки на провальное подключение к ДБ
 - [x] баланс кошелька не залочен
-- [] нет логирования ошибок
+- [x] поменять wallet_id на WALLET_UUID
+- [] привести структуру проекта в порядок и читаемый вид, упростить main функцию
+- [x] чекнуть на sql-injection
 
-- [] тест на кейс с 1000 RPS
+- [x] тест на кейс с 1000 RPS
 - [] докер для апи и ДБ
 - [x] проверить покрытие эндпоинтов тестами

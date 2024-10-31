@@ -23,14 +23,14 @@ class OperationRequest(BaseModel):
 
 locks = {}
 
-@app.post("/api/v1/wallets/{wallet_id}/operation")
-async def perform_operation(wallet_id: str, operation: OperationRequest):
-    if wallet_id not in locks:
-        locks[wallet_id] = threading.Lock()
-    with locks[wallet_id]:
+@app.post("/api/v1/wallets/{WALLET_UUID}/operation")
+async def perform_operation(WALLET_UUID: str, operation: OperationRequest):
+    if WALLET_UUID not in locks:
+        locks[WALLET_UUID] = threading.Lock()
+    with locks[WALLET_UUID]:
         session = Session()
         try:
-            wallet = session.query(Wallet).with_for_update().get(wallet_id)
+            wallet = session.query(Wallet).with_for_update().get(WALLET_UUID)
             if not wallet:
                 raise HTTPException(status_code=404, detail="Wallet not found")
 
@@ -57,10 +57,10 @@ async def perform_operation(wallet_id: str, operation: OperationRequest):
         finally:
             session.close()
 
-@app.get("/api/v1/wallets/{wallet_id}")
-async def get_balance(wallet_id: str):
+@app.get("/api/v1/wallets/{WALLET_UUID}")
+async def get_balance(WALLET_UUID: str):
     session = Session()
-    wallet = session.query(Wallet).get(wallet_id)
+    wallet = session.query(Wallet).get(WALLET_UUID)
     if not wallet:
         raise HTTPException(status_code=404, detail="Wallet not found")
     return {"balance": wallet.balance}
