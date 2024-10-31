@@ -22,3 +22,10 @@ Postgresql
 Решенное задание залить на гитхаб, предоставить ссылку
 Все возникающие вопросы по заданию решать самостоятельно, по своему усмотрению.
 
+### Set env variables (after cloning)
+
+```bash
+With activated .venv pass following env variables in bash:
+export DB_USER=%USER%
+export DB_PASS=%PASSWORD%
+```
