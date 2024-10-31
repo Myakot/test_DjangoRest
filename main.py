@@ -1,13 +1,18 @@
+import os
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Wallet
+from dotenv import load_dotenv
 
+load_dotenv()
+
+DB_URL = os.getenv('DB_URL')
 app = FastAPI()
 
-# Database connection
-engine = create_engine('postgresql://user:password@host:port/dbname')
+engine = create_engine(DB_URL)
 Session = sessionmaker(bind=engine)
 
 class OperationRequest(BaseModel):
