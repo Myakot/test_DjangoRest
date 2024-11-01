@@ -12,7 +12,7 @@ This project is a RESTful API built with FastAPI, PostgreSQL, and Alembic. It pr
 * [Endpoints](#endpoints)
 * [Database](#database)
 * [Testing](#testing)
-* [Environment Variables](#environment variables)
+* [Environment Variables](#environment-variables)
 * [Dockerization](#dockerization)
 
 ## Project Structure
