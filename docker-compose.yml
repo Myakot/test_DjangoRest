@@ -5,6 +5,7 @@ services:
     image: postgres
     environment:
       DB_URL: ${DB_URL}
+      POSTGRES_PASSWORD: password
     volumes:
       - ./docker_config.py:/app/docker_config.py
 

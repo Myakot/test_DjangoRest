@@ -1,26 +1,54 @@
-# Test task
+# Project Overview
+================
 
-Добрый день, уважаемый соискатель, данное задание нацелено на выявление вашего реального уровня в разработке на python, поэтому отнеситесь к нему, как к работе на проекте. Выполняйте его честно и проявите себя по максимуму, удачи! 
-Напишите приложение, которое по REST принимает запрос вида
-POST api/v1/wallets/<WALLET_UUID>/operation
-{
-operationType: DEPOSIT or WITHDRAW,
-amount: 1000
-}
-после выполнять логику по изменению счета в базе данных
-также есть возможность получить баланс кошелька
-GET api/v1/wallets/{WALLET_UUID}
-стек:
-FastAPI / Flask / Django
-Postgresql
-Должны быть написаны миграции для базы данных с помощью liquibase (по желанию)
-Обратите особое внимание проблемам при работе в конкурентной среде (1000 RPS по одному кошельку). Ни один запрос не должен быть не обработан (50Х error)
-Предусмотрите соблюдение формата ответа для заведомо неверных запросов, когда кошелька не существует, не валидный json, или недостаточно средств.
-приложение должно запускаться в докер контейнере, база данных тоже, вся система должна подниматься с помощью docker-compose
-предусмотрите возможность настраивать различные параметры приложения и базы данных без пересборки контейнеров.
-эндпоинты должны быть покрыты тестами.
-Решенное задание залить на гитхаб, предоставить ссылку
-Все возникающие вопросы по заданию решать самостоятельно, по своему усмотрению.
+This project is a RESTful API built with FastAPI, PostgreSQL, and Alembic. It provides endpoints for wallet operations, including deposit, withdrawal, and balance retrieval.
+
+## Table of Contents
+---------------
+
+* [Project Structure](#project-structure)
+* [Endpoints](#endpoints)
+* [Database](#database)
+* [Testing](#testing)
+* [Dockerization](#dockerization)
+
+## Project Structure
+-----------------
+
+The project is organized into the following directories:
+
+* `app`: contains the main application code
+* [alembic](cci:4:///home/myakot/PycharmProjects/test_DjangoRest/requirements.txt:0:0-36:0): contains database migration scripts
+* `tests`: contains unit tests and integration tests
+* [config](cci:4:///home/myakot/PycharmProjects/test_DjangoRest/alembic/env.py:0:0-37:0): contains configuration files
+
+## Endpoints
+------------
+
+The API provides the following endpoints:
+
+* `POST /api/v1/wallets/<WALLET_UUID>/operation`: performs a deposit or withdrawal operation on a wallet
+* `GET /api/v1/wallets/<WALLET_UUID>`: retrieves the balance of a wallet
+
+## Database
+------------
+
+The project uses PostgreSQL as the database management system. The database schema is defined using Alembic migration scripts.
+
+## Testing
+------------
+
+The project includes unit tests and integration tests written using Pytest.
+
+## Dockerization
+--------------
+
+The project is dockerized using Docker Compose. To run the application, use the following command:
+
+```bash
+docker-compose up
+```
+This will start the application and database containers.
 
 # Benchmark Results
 ### Summary
@@ -40,18 +68,3 @@ Postgresql
 * **Skipped:** 8
 * **Warnings:** 1
 * **Total Time:** 965.53s (0:16:05)
-
-# TODO
-- [x] кейс, где число отрицательное
-- [x] кейс, где айди кошелька не строка
-- [x] проверка на наличие кошелька перед использованием session.merge
-- [x] нет проверки на провальное подключение к ДБ
-- [x] баланс кошелька не залочен
-- [x] поменять wallet_id на WALLET_UUID
-- [x] привести структуру проекта в порядок и читаемый вид, упростить main функцию
-- [x] чекнуть на sql-injection
-- [x] тест на кейс с 1000 RPS
-- [x] проверить покрытие эндпоинтов тестами
-
-- [] отредачить README.md
-- [] докер для апи и ДБ
