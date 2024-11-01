@@ -9,6 +9,7 @@ from .schemas import OperationRequest
 
 locks: Dict[str, threading.Lock] = {}
 
+
 def perform_operation(WALLET_UUID: str, operation: OperationRequest):
     if WALLET_UUID not in locks:
         locks[WALLET_UUID] = threading.Lock()
@@ -41,6 +42,7 @@ def perform_operation(WALLET_UUID: str, operation: OperationRequest):
             raise HTTPException(status_code=500, detail="Database error")
         finally:
             session.close()
+
 
 def get_balance(WALLET_UUID: str):
     session = Session()

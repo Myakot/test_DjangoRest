@@ -50,6 +50,14 @@ docker-compose up
 ```
 This will start the application and database containers.
 
+## API Documentation
+------------
+
+The API documentation is automatically generated using FastAPI's built-in documentation features. To access the documentation, navigate to `http://localhost:8000/docs` after starting the application.
+
+The documentation includes information about available endpoints, request and response bodies, and other relevant details.
+
+
 # Benchmark Results
 ### Summary
 

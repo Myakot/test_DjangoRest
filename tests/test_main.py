@@ -7,16 +7,18 @@ from app.models import Wallet
 
 client = TestClient(app)
 
-WALLET_UUID = '1'
+WALLET_UUID = "1"
 balance = 100
 operation_type = "DEPOSIT"
 amount = 50
+
 
 def setup():
     session = Session()
     wallet = Wallet(id=WALLET_UUID, balance=balance)
     session.merge(wallet)
     session.commit()
+
 
 def teardown():
     session = Session()
@@ -25,6 +27,7 @@ def teardown():
         session.delete(wallet)
         session.commit()
 
+
 def test_get_balance():
     setup()
     response = client.get(f"/api/v1/wallets/{WALLET_UUID}")
@@ -32,10 +35,12 @@ def test_get_balance():
     assert response.json()["balance"] == balance
     teardown()
 
+
 def test_get_balance_invalid_WALLET_UUID():
     response = client.get("/api/v1/wallets/999")
     assert response.status_code == 404
     assert response.json()["detail"] == "Wallet not found"
+
 
 def test_perform_operation_invalid_WALLET_UUID():
     response = client.post(
@@ -44,6 +49,7 @@ def test_perform_operation_invalid_WALLET_UUID():
     )
     assert response.status_code == 404
     assert response.json()["detail"] == "Wallet not found"
+
 
 def test_perform_operation_deposit():
     setup()
@@ -55,6 +61,7 @@ def test_perform_operation_deposit():
     assert response.json()["balance"] == balance + amount
     teardown()
 
+
 def test_perform_operation_withdraw():
     setup()
     response = client.post(
@@ -64,6 +71,7 @@ def test_perform_operation_withdraw():
     assert response.status_code == 200
     assert response.json()["balance"] == balance - amount
     teardown()
+
 
 def test_perform_operation_invalid_operation_type():
     setup()
@@ -75,6 +83,7 @@ def test_perform_operation_invalid_operation_type():
     assert response.json()["detail"] == "Invalid operation type"
     teardown()
 
+
 def test_perform_operation_insufficient_funds():
     setup()
     response = client.post(
@@ -84,6 +93,7 @@ def test_perform_operation_insufficient_funds():
     assert response.status_code == 400
     assert response.json()["detail"] == "Insufficient funds"
     teardown()
+
 
 def test_perform_operation_concurrent_updates():
     setup()
@@ -114,6 +124,7 @@ def test_perform_operation_concurrent_updates():
 @pytest.mark.benchmark
 def test_perform_operation_1000_rps(benchmark):
     setup()
+
     def perform_operation():
         response = client.post(
             f"/api/v1/wallets/{WALLET_UUID}/operation",
