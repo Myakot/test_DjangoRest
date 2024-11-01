@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/d95789b672a970f73666/maintainability)](https://codeclimate.com/github/Myakot/test_DjangoRest/maintainability)
+
 # Project Overview
 ================
 
@@ -10,6 +12,7 @@ This project is a RESTful API built with FastAPI, PostgreSQL, and Alembic. It pr
 * [Endpoints](#endpoints)
 * [Database](#database)
 * [Testing](#testing)
+* [Environment Variables](#environment variables)
 * [Dockerization](#dockerization)
 
 ## Project Structure
