@@ -40,6 +40,15 @@ The project uses PostgreSQL as the database management system. The database sche
 
 The project includes unit tests and integration tests written using Pytest.
 
+## Environment Variables
+------------
+
+This project requires a single environment variable, `DB_URL`, to connect to the database.
+This, you have to setup manually, by creating an '.env' file in the root directory and adding said variable there, i.e.:
+```
+DB_URL=postgresql://postgres:password@localhost:5432/postgres
+```
+
 ## Dockerization
 --------------
 
