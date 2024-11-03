@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "e0cfde4b-21ea-463c-ade3-db87959931e0",
+		"name": "test_DjangoRest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37898212"
+	},
+	"item": [
+		{
+			"name": "tests",
+			"item": [
+				{
+					"name": "TEST Incorrect wallet UID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/wallets/99999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEST Incorrect walled UID operation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"operation_type\": \"DEPOSIT\", \"amount\": 100}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/wallets/9999/operation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"9999",
+								"operation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEST Incorrect operation type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"operation_type\": \"incorrect_operation\", \"amount\": 100}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000 /api/v1/wallets/1/operation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000 ",
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"1",
+								"operation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "App",
+			"item": [
+				{
+					"name": "Get wallet balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/wallets/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DEPOSIT 100",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"operation_type\": \"DEPOSIT\", \"amount\": 100}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/wallets/1/operation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"1",
+								"operation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WITHDRAW 100",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"operation_type\": \"WITHDRAW\", \"amount\": 100}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/wallets/1/operation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"1",
+								"operation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

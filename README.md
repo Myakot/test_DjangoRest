@@ -12,8 +12,9 @@ This project is a RESTful API built with FastAPI, PostgreSQL, and Alembic. It pr
 * [Endpoints](#endpoints)
 * [Database](#database)
 * [Testing](#testing)
-* [Environment Variables](#environment variables)
+* [Environment Variables](#environment-variables)
 * [Dockerization](#dockerization)
+* [Using the Postman Collection](#sing-the-postman-collection)
 
 ## Project Structure
 -----------------
@@ -88,3 +89,31 @@ The documentation includes information about available endpoints, request and re
 * **Skipped:** 8
 * **Warnings:** 1
 * **Total Time:** 965.53s (0:16:05)
+
+# Using the Postman Collection
+
+To make it easier to test and explore the API, a Postman collection has been included in the project. Here's how to use it:
+
+### Importing the Collection
+
+1. Open Postman and click on the "Import" button in the top-left corner.
+2. Select the `test_DjangoRest.postman_collection.json` file from the project root.
+3. Click "Import" to add the collection to your Postman workspace.
+
+### Setting up the Environment
+
+1. In the Postman collection, click on the three dots next to the collection name and select "Edit".
+2. In the "Variables" tab, update the `DB_URL` variable with your own database connection string.
+3. Save the changes.
+
+### Running the Requests
+
+1. Select a request from the collection and click the "Send" button to execute it.
+2. You can modify the request parameters, headers, and body as needed.
+3. Use the "Save" button to save any changes you make to the request.
+
+### Tips
+
+* Make sure to update the `DB_URL` variable with your own database connection string before running the requests.
+* Use the Postman console to view the request and response details.
+* You can also use the Postman environment variables to parameterize your requests.
